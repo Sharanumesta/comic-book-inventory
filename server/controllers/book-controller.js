@@ -3,7 +3,28 @@ const Book = require('../db/model');
 // Get all the books from inventory
 const getBooks = async ( req, res ) => {
     try {
-        const books = await Book.find({},{ _id:0});
+        const { sort } = req.query;
+        // Determine the sort order based on the query
+        let sortOrder = {};
+
+        // Determine sort order based on the sort query
+        switch (sort) {
+            case 'name':
+                sortOrder = { bookName: 1 }; // Ascending order
+                break;
+            case 'author':
+                sortOrder = { authorName: 1 }; // Ascending order
+                break;
+            case 'price':
+                sortOrder = { price: 1 }; // Ascending order (Low to High)
+                break;
+            case 'priceDesc':
+                sortOrder = { price: -1 }; // Descending order (High to Low)
+                break;
+            default:
+                sortOrder = {}; // No sorting
+        }
+        const books = await Book.find({}, { _id: 0 }).sort(sortOrder); // Apply sorting
         res.status(200).json(books);
     } catch (error) {
         console.log("Error fetching books: ", error);
@@ -39,14 +60,17 @@ const updateBook = async (req, res) => {
     try {
         const bookData = req.body;
         const isbn = bookData.isbn;
-        const updateBookDetails = await Book.findOneAndUpdate({isbn:isbn},{
+        const updatedBook  = await Book.findOneAndUpdate({isbn:isbn},{
             $set: {
-                price : updateBookDetails.price,
-                discount : updateBookDetails.discount,
-                condition : updateBookDetails.condition,
-                description : updateBookDetails.description
+                price : bookData.price,
+                discount : bookData.discount,
+                condition : bookData.condition,
+                description : bookData.description
             }
         });
+        if (!updatedBook) {
+            return res.status(404).json({ message: "Book not found" });
+        }
         res.status(200).json({message: "Book updated successfully" })
     } catch (error) {
         console.log("Error while Adding a book: ", error);
@@ -74,12 +98,10 @@ const deleteBook = async (req, res) => {
 const detailBook = async (req, res) => {
     try {
         const { isbn } = req.query;
-        console.log(isbn);
         const book = await Book.findOne({isbn : isbn}, {_id : 0, __v : 0});
         if(!book){
             return res.status(404).json({ message: "Book not found" });
         }
-        console.log(book);
         res.status(200).json(book);
     } catch (error) {
         console.log("Error while finding details of book: ", error);

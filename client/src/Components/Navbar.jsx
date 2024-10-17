@@ -1,19 +1,25 @@
-import React from 'react'
+import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Link } from 'react-router-dom';
 
 function Navbar() {
   return (
-    <>
-        <nav class="navbar navbar-light bg-dark">
-            <div class="container-fluid container">
-                <a class="navbar-brand text-white" href="#">
-                    <p className='fs-3'>ComicShelf</p>
-                </a>
-                <button type="button" class="btn btn-success fs-5">Add a New Book</button>
-            </div>
-        </nav>
-    </>
-  )
+    <nav className="navbar navbar-light bg-dark">
+      <div className="container-fluid container d-flex align-items-center">
+        <Link to="/" className="text-decoration-none">
+          <p className="nav-brand fw-bold fs-3 text-white">ComicShelf</p>
+        </Link>
+        <div className="d-flex align-items-center">
+          <Link to="/" className="text-decoration-none text-white fw-bold btn fs-5 mb-0 me-3">
+            Home
+          </Link>
+          <Link to="/new-book">
+            <button type="button" className="btn btn-primary fs-5">Add a New Book</button>
+          </Link>
+        </div>
+      </div>
+    </nav>
+  );
 }
 
-export default Navbar
+export default Navbar;
