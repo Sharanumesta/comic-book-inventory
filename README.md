@@ -121,12 +121,12 @@ The project directory is organized as follows:
    cd comic_books_inventory
 
    For the server:
-      cd comic_books_inventory/server
+      cd server
       npm install
       npm run start
 
    For the client:
-      cd comic_books_inventory/client
+      cd client
       npm install
       npm run dev
 
