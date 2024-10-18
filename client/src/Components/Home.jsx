@@ -109,7 +109,7 @@ function Home() {
                       <option value="condition">Condition</option>
                     </select>
                   </div>
-                  <div className="flex-grow-1">
+                  <div className="d-flex mt-4 m-0 h-50">
                     {filterType === "author" ? (
                       <select
                         className="form-select"
