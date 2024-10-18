@@ -1,4 +1,4 @@
-# Comic Book Inventory Management - Project
+# Comic Book Inventory Management
 
 ## Project Overview
 A React-based e-commerce store that manages and displays comic books as inventory items. The primary objective was to implement CRUD (Create, Read, Update, Delete) functionality, allowing the store manager to efficiently manage comic books available for sale.
