@@ -3,7 +3,7 @@ const Book = require('../db/model');
 // Get all the books from inventory
 const getBooks = async ( req, res ) => {
     try {
-        const { sort } = req.query;
+        const { sort, filterType, filterValue } = req.query;
         // Determine the sort order based on the query
         let sortOrder = {};
 
@@ -24,7 +24,22 @@ const getBooks = async ( req, res ) => {
             default:
                 sortOrder = {}; // No sorting
         }
-        const books = await Book.find({}, { _id: 0 }).sort(sortOrder); // Apply sorting
+
+        // Build the filter object based on the filterType
+        const filter = {};
+        if (filterType && filterValue) {
+            if (filterType === 'author') {
+                filter.authorName = { $regex: new RegExp(filterValue, 'i') }; // Case-insensitive search
+            } 
+            // else if (filterType === 'genre') {
+            //     filter.genre = { $regex: new RegExp(filterValue, 'i') };
+            // }
+             else if (filterType === 'condition') {
+                filter.condition = filterValue; // Exact match
+            }
+        }
+        
+        const books = await Book.find(filter, { _id: 0 }).sort(sortOrder); // Apply sorting
         res.status(200).json(books);
     } catch (error) {
         console.log("Error fetching books: ", error);
