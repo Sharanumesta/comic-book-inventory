@@ -114,12 +114,6 @@ The project directory is organized as follows:
 - **Postman Collection**: 
   - I prepared and exported a Postman Collection that includes all API endpoints for testing. You can access it [here](https://alone7-8517.postman.co/workspace/Alone-Workspace~e9c75852-334e-4411-a7fd-4319c6f95992/request/25239808-08b33836-b24f-46ff-a235-fa7532c7bc8c?action=share&creator=25239808&ctx=documentation).
 
-## Additional Notes
-- This project focuses solely on backend functionality; frontend/UI development was not required.
-- User authentication is not included. However, I ensured proper input validation and error handling are in place.
-- Dummy data was used for development and testing purposes.
-- I have ensured that the code is original and adheres to academic integrity standards.
-
 ## How to Use
 1. Clone the repository:
    ```bash
