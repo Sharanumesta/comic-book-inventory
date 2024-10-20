@@ -1,29 +1,28 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
+import BookList from "./BookList";
+import FilterSort from "./FilterSort";
 
 function Home() {
   const navigate = useNavigate();
   const [books, setBooks] = useState([]);
   const [authors, setAuthors] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1); //For pagination
-  const [itemsPerPage] = useState(10); // For pagination
+  // Pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(10);
+  // Filtration and Sort
   const [sort, setSort] = useState();
   const [filterType, setFilterType] = useState("author");
   const [filterValue, setFilterValue] = useState("");
   const [error, setError] = useState("");
 
-  // Fetching books and authors
   useEffect(() => {
     const fetchBooks = async () => {
       try {
         const response = await axios.get("http://localhost:8080/api/books/", {
-          params: {
-            sort: sort,
-            filterType: filterType,
-            filterValue: filterValue,
-          },
+          params: { sort, filterType, filterValue },
         });
         setBooks(response.data);
 
@@ -49,9 +48,7 @@ function Home() {
 
     const fetchAuthors = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/api/books/", {
-          params: { sort: "author" },
-        });
+        const response = await axios.get("http://localhost:8080/api/books/");
         const uniqueAuthors = [
           ...new Set(response.data.map((book) => book.authorName)),
         ];
@@ -66,26 +63,10 @@ function Home() {
     fetchAuthors();
   }, [sort, filterType, filterValue, navigate]);
 
-  // Pagination logic
   const indexOfLastBook = currentPage * itemsPerPage;
   const indexOfFirstBook = indexOfLastBook - itemsPerPage;
   const currentBooks = books.slice(indexOfFirstBook, indexOfLastBook);
   const totalPages = Math.ceil(books.length / itemsPerPage);
-
-  // Sorting handler
-  const handleSortChange = (e) => {
-    setSort(e.target.value);
-  };
-
-  // Filtering handlers
-  const handleFilterChange = (e) => {
-    setFilterType(e.target.value);
-    setFilterValue(""); // Reset filter value on filter type change
-  };
-
-  const handleInputChange = (e) => {
-    setFilterValue(e.target.value);
-  };
 
   return (
     <section>
@@ -94,120 +75,14 @@ function Home() {
         <div className="row d-flex justify-content-center">
           <div className="col-10">
             {error && <div className="alert alert-danger">{error}</div>}
-            <ul className="list-group mt-4 d-block">
-              <div className="row mb-3 align-items-end">
-                {/* Filtering Section */}
-                <div className="col-8 d-flex">
-                  <div className="d-flex flex-column me-2">
-                    <h6 className="d-block">Filter by:</h6>
-                    <select
-                      className="form-select"
-                      onChange={handleFilterChange}
-                      value={filterType}
-                    >
-                      <option value="author">Author</option>
-                      <option value="condition">Condition</option>
-                    </select>
-                  </div>
-                  <div className="d-flex mt-4 m-0 h-50">
-                    {filterType === "author" ? (
-                      <select
-                        className="form-select"
-                        id="authorSelect"
-                        onChange={handleInputChange}
-                        value={filterValue}
-                      >
-                        <option value="">Select Author</option>
-                        {authors.map((author, index) => (
-                          <option key={index} value={author}>
-                            {author}
-                          </option>
-                        ))}
-                      </select>
-                    ) : (
-                      <select
-                        className="form-select"
-                        id="conditionSelect"
-                        onChange={handleInputChange}
-                        value={filterValue}
-                      >
-                        <option value="">Select Condition</option>
-                        <option value="new">New</option>
-                        <option value="used">Used</option>
-                      </select>
-                    )}
-                  </div>
-                </div>
-
-                {/* Sorting Section */}
-                <div className="col-4 d-flex align-items-center justify-content-end">
-                  <label htmlFor="sort" className="form-label fw-semibold me-2">
-                    <h6 className="">Sort:</h6>
-                  </label>
-                  <select
-                    className="form-select"
-                    id="sort"
-                    onChange={handleSortChange}
-                    value={sort}
-                  >
-                    <option value="">Select Sort Option</option>
-                    <option value="name">Book Name</option>
-                    <option value="author">Author Name</option>
-                    <option value="price">Price (Low to High)</option>
-                    <option value="priceDesc">Price (High to Low)</option>
-                  </select>
-                </div>
-              </div>
-
-              {/* Books List */}
-              <li className="list-group-item d-flex justify-content-between align-items-center border rounded-3 text-success mb-2">
-                <div className="col-8 d-flex">
-                  <h5 className="col-3">ISBN</h5>
-                  <h5 className="col-3">Name</h5>
-                  <h5 className="col-3">Author</h5>
-                  <h5 className="col-3">Price</h5>
-                </div>
-                <div className="col-4 d-flex justify-content-around">
-                  <h5 className="text-success text-decoration-underline">
-                    Edit
-                  </h5>
-                </div>
-              </li>
-
-              {currentBooks.map((book) => (
-                <li
-                  key={book.isbn}
-                  className="list-group-item d-flex align-items-center justify-content-center rounded-3"
-                >
-                  <div className="col-8 d-flex align-items-center justify-content-center">
-                    <h6 className="col-3">{book.isbn}</h6>
-                    <h6 className="col-3">{book.bookName}</h6>
-                    <h6 className="col-3">{book.authorName}</h6>
-                    <h6 className="col-3">{book.price}</h6>
-                  </div>
-                  <div className="col-4 d-flex justify-content-around">
-                    <Link
-                      to={`/book-detail/${book.isbn}`}
-                      className="btn btn-success"
-                    >
-                      Details
-                    </Link>
-                    <Link
-                      to={`/update-book/${book.isbn}`}
-                      className="btn btn-warning"
-                    >
-                      Update
-                    </Link>
-                    <Link
-                      to={`/delete-book/${book.isbn}`}
-                      className="btn btn-danger"
-                    >
-                      Delete
-                    </Link>
-                  </div>
-                </li>
-              ))}
-            </ul>
+            <FilterSort
+              setSort={setSort}
+              filterType={filterType}
+              setFilterType={setFilterType}
+              setFilterValue={setFilterValue}
+              authors={authors}
+            />
+            <BookList currentBooks={currentBooks} />
           </div>
         </div>
 
@@ -217,9 +92,7 @@ function Home() {
             {Array.from({ length: totalPages }, (_, index) => (
               <li
                 key={index + 1}
-                className={`page-item ${
-                  currentPage === index + 1 ? "active" : ""
-                }`}
+                className={`page-item ${currentPage === index + 1 ? "active" : ""}`}
               >
                 <button
                   className="page-link"
