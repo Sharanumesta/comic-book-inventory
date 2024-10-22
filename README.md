@@ -125,7 +125,7 @@ The project directory is organized as follows:
    For the server:
       cd server
       npm install
-      npm run start
+      npm start
 
    For the client:
       cd client
