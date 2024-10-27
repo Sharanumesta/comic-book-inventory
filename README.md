@@ -45,6 +45,8 @@ This project involves developing the backend for a React-based e-commerce store 
 - **Fetch Inventory List**: 
   - API to retrieve all available comic books, including pagination, filtering, and sorting options.
 
+- **Search for Comic Books:**
+  - Search functionality allows users to find comic books by title, author, or isbn.
 ### C. Comic Book Details API
 
 - **Get Comic Book Details**: 
@@ -107,6 +109,23 @@ The project directory is organized as follows:
 - **Get Book Details**
   - `GET /api/books/book-detail`
     - **Description**: Retrieve details of a specific comic book.
+
+- **Search for Books**
+  - `GET /api/books/search`
+    - **Description:** Search for a comic book by name, author name, or ISBN. This endpoint takes parameters as `isbn`, `bookName`, or `authorName` with their respective values to fetch the particular book.
+    - **Example Request:** 
+      - To search by ISBN:
+        ```
+        /api/books/search?isbn=978014168236
+        ```
+      - To search by book name:
+        ```
+        /api/books/search?bookName=The Great Gatsby
+        ```
+      - To search by author name:
+        ```
+        /api/books/search?authorName=John Doe
+        ```
 
 ## Deliverables
 
