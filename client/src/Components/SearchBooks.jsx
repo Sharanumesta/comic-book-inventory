@@ -3,7 +3,8 @@ import React, { useState } from "react";
 function SearchBooks({ searchData, onSearch }) {
   const [searchValues, setSearchValues] = useState(searchData);
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     onSearch(searchValues);
   };
 
@@ -16,7 +17,7 @@ function SearchBooks({ searchData, onSearch }) {
     <>
       <div className="row d-flex justify-content-center">
         <div className="col-8 bg-light bg-opacity-75 p-2 rounded-3 ">
-          <form action="">
+          <form onSubmit={handleSubmit}>
             <div className="row d-flex align-items-center justify-content-start">
               <div className="col-3">
                 <select
@@ -42,9 +43,8 @@ function SearchBooks({ searchData, onSearch }) {
               </div>
               <div className="col-3">
                 <button
-                  type="button"
+                  type="submit"
                   class="btn btn-outline-secondary w-100 fw-bold  py-2 me-2"
-                  onClick={handleSubmit}
                 >
                   Search
                 </button>
