@@ -4,19 +4,33 @@ import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import BookList from "./BookList";
 import FilterSort from "./FilterSort";
+import SearchBooks from "./SearchBooks";
 
 function Home() {
   const navigate = useNavigate();
   const [books, setBooks] = useState([]);
   const [authors, setAuthors] = useState([]);
+
   // Pagination
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
+
+  const indexOfLastBook = currentPage * itemsPerPage;
+  const indexOfFirstBook = indexOfLastBook - itemsPerPage;
+  const currentBooks = books.slice(indexOfFirstBook, indexOfLastBook);
+  const totalPages = Math.ceil(books.length / itemsPerPage);
+
   // Filtration and Sort
-  const [sort, setSort] = useState();
+  const [sort, setSort] = useState("name");
   const [filterType, setFilterType] = useState("author");
   const [filterValue, setFilterValue] = useState("");
   const [error, setError] = useState("");
+
+  // search section
+  const [searchData, setSearchData] = useState({
+    searchType: "bookName",
+    searchInput: "",
+  });
 
   useEffect(() => {
     const fetchBooks = async () => {
@@ -63,18 +77,32 @@ function Home() {
     fetchAuthors();
   }, [sort, filterType, filterValue, navigate]);
 
-  const indexOfLastBook = currentPage * itemsPerPage;
-  const indexOfFirstBook = indexOfLastBook - itemsPerPage;
-  const currentBooks = books.slice(indexOfFirstBook, indexOfLastBook);
-  const totalPages = Math.ceil(books.length / itemsPerPage);
+  const handleSearch = async (data) => {
+    try {
+      const response = await axios.get("http://localhost:8080/api/books/search", { params: data });
+      if (response.data.length === 0) {
+        setError("Book not found !!");
+        setBooks([]);
+      } else {
+        setBooks(response.data);
+        setError("");
+      }
+      setSearchData(data);
+    } catch (error) {
+      console.error("Error fetching Books:", error);
+      setError("Error fetching Books");
+    }
+  };
 
   return (
     <section>
-      <div className="container text-center p-5">
-        <h2 className="p text-primary">All Comic Books</h2>
+      <div className="container text-center">
+        <h2 className="p text-dark pt-5">All Comic Books</h2>
         <div className="row d-flex justify-content-center">
           <div className="col-10">
-            {error && <div className="alert alert-danger">{error}</div>}
+            {error && (
+              <div className="alert alert-danger fw-semibold">{error}</div>
+            )}
             <FilterSort
               setSort={setSort}
               filterType={filterType}
@@ -82,6 +110,7 @@ function Home() {
               setFilterValue={setFilterValue}
               authors={authors}
             />
+            <SearchBooks searchData={searchData} onSearch={handleSearch} />
             <BookList currentBooks={currentBooks} />
           </div>
         </div>
@@ -92,7 +121,9 @@ function Home() {
             {Array.from({ length: totalPages }, (_, index) => (
               <li
                 key={index + 1}
-                className={`page-item ${currentPage === index + 1 ? "active" : ""}`}
+                className={`page-item ${
+                  currentPage === index + 1 ? "active" : ""
+                }`}
               >
                 <button
                   className="page-link"

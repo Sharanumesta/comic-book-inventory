@@ -5,14 +5,14 @@ const BookList = ({ currentBooks }) => {
   return (
     <ul className="list-group mt-4 d-block">
       <li className="list-group-item d-flex justify-content-between align-items-center border rounded-3 text-success mb-2">
-        <div className="col-8 d-flex">
+        <div className="col-8 d-flex fw-semibold">
           <h5 className="col-3">ISBN</h5>
           <h5 className="col-3">Name</h5>
           <h5 className="col-3">Author</h5>
           <h5 className="col-3">Price</h5>
         </div>
         <div className="col-4 d-flex justify-content-around">
-          <h5 className="text-success text-decoration-underline">Edit</h5>
+          <h5 className="text-success">Edits</h5>
         </div>
       </li>
 
