@@ -110,6 +110,23 @@ The project directory is organized as follows:
   - `GET /api/books/book-detail`
     - **Description**: Retrieve details of a specific comic book.
 
+- **Search for Books**
+  - `GET /api/books/search`
+    - **Description:** Search for a comic book by name, author name, or ISBN. This endpoint takes parameters as `isbn`, `bookName`, or `authorName` with their respective values to fetch the particular book.
+    - **Example Request:** 
+      - To search by ISBN:
+        ```
+        /api/books/search?isbn=978014168236
+        ```
+      - To search by book name:
+        ```
+        /api/books/search?bookName=The Great Gatsby
+        ```
+      - To search by author name:
+        ```
+        /api/books/search?authorName=John Doe
+        ```
+
 ## Deliverables
 
 - **GitHub Repository**: 
