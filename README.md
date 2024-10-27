@@ -45,6 +45,8 @@ This project involves developing the backend for a React-based e-commerce store 
 - **Fetch Inventory List**: 
   - API to retrieve all available comic books, including pagination, filtering, and sorting options.
 
+- **Search for Comic Books:**
+  - Search functionality allows users to find comic books by title, author, or isbn.
 ### C. Comic Book Details API
 
 - **Get Comic Book Details**: 
