@@ -133,7 +133,7 @@ The project directory is organized as follows:
   - The project is uploaded to my GitHub repository [comic-book-inventory](https://github.com/Sharanumesta/comic-book-inventory).
 
 - **Postman Collection**: 
-  - I prepared and exported a Postman Collection that includes all API endpoints for testing. You can access it [here](https://alone7-8517.postman.co/workspace/Alone-Workspace~e9c75852-334e-4411-a7fd-4319c6f95992/request/25239808-08b33836-b24f-46ff-a235-fa7532c7bc8c?action=share&creator=25239808&ctx=documentation).
+  - I prepared and exported a Postman Collection that includes all API endpoints for testing. You can access it [here](https://alone7-8517.postman.co/workspace/Alone-Workspace~e9c75852-334e-4411-a7fd-4319c6f95992/collection/25239808-852ea088-c419-41e2-a90e-22abb4e47713?action=share&creator=25239808&active-environment=25239808-b1312c28-d2bf-4b2f-8322-e78017096c61).
 
 ## How to Use
 1. Clone the repository:
