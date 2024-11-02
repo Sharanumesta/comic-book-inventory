@@ -38,6 +38,7 @@ function SearchBooks({ searchData, onSearch }) {
                   name="searchInput"
                   value={searchValues.searchInput}
                   onChange={handleInputChange}
+                  placeholder={`Search by ${searchValues.searchType}`}
                   required
                 />
               </div>
