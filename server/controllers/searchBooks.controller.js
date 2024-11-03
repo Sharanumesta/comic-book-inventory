@@ -7,7 +7,8 @@ const searchBooks = async (req, res) => {
     if(searchKey === "isbn"){
       filter[searchKey] = searchValue;
     }else{
-      const searchRegex = new RegExp(searchValue, 'i');
+      const trimmedSearchInput = searchValue.trim();
+      const searchRegex = new RegExp(trimmedSearchInput, 'i');
       filter[searchKey] = searchRegex;
     }
 

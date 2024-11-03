@@ -65,7 +65,7 @@ function Home() {
         const response = await axios.get("http://localhost:8080/api/books/");
         const uniqueAuthors = [
           ...new Set(response.data.map((book) => book.authorName)),
-        ];
+        ].sort();
         setAuthors(uniqueAuthors);
       } catch (error) {
         console.error("Error fetching authors:", error);
