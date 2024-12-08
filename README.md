@@ -159,7 +159,7 @@ Here are the API endpoints to interact with the comic book inventory. Use the ba
    For the server:
       cd server
       npm install
-      npm start
+      npm run dev
 
    For the client:
       cd client
