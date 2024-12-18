@@ -71,18 +71,18 @@ The project directory is organized as follows:
 
 ## API Endpoints 🔗
 
-Here are the API endpoints to interact with the comic book inventory. Use the base URL `{{comicBook_url}}`.
+Here are the API endpoints to interact with the comic book inventory. Use the base URL `http://localhost:8080/api/books`.
 
 ### Endpoints
 
 - **Get All Books** 📖
   - **Method**: `GET`
-  - **Endpoint**: `{{comicBook_url}}/`
+  - **Endpoint**: `http://localhost:8080/api/books/`
   - **Description**: Retrieve a list of all comic books in the inventory.
 
 - **Add a New Book** ➕
   - **Method**: `POST`
-  - **Endpoint**: `{{comicBook_url}}/new-book`
+  - **Endpoint**: `http://localhost:8080/api/books/new-book`
   - **Description**: Add a new comic book to the inventory.
   - **Request Body**: 
     ```json
@@ -101,27 +101,44 @@ Here are the API endpoints to interact with the comic book inventory. Use the ba
 
 - **Update an Existing Book** 🔄
   - **Method**: `PATCH`
-  - **Endpoint**: `{{comicBook_url}}/update-book`
+  - **Endpoint**: `http://localhost:8080/api/books/update-book`
   - **Description**: Update details of an existing comic book.
+  - **Example Requests**: `http://localhost:8080/api/books/update-book?isbn=9780141182636`
+  - **Request Body**: 
+    ```json
+    {
+      "isbn": "978014168236",
+      "bookName": "The Great Gatsby",
+      "authorName": "John Doe",
+      "yearOfPublication": 1925,
+      "price": 20.99,
+      "discount": 5,
+      "numberOfPages": 180,
+      "condition": "used",
+      "description": "A classic novel about love."
+    }
+    ```
 
 - **Delete a Book** 🗑️
   - **Method**: `DELETE`
-  - **Endpoint**: `{{comicBook_url}}/delete-book`
+  - **Endpoint**: `http://localhost:8080/api/books/delete-book`
   - **Description**: Remove a comic book from the inventory.
+  - **Example Requests**: `http://localhost:8080/api/books/delete-book?isbn=978014168236`
 
 - **Get Book Details** 🔍
   - **Method**: `GET`
-  - **Endpoint**: `{{comicBook_url}}/book-detail`
+  - **Endpoint**: `http://localhost:8080/api/books/book-detail`
   - **Description**: Retrieve details of a specific comic book.
+  - **Example Requests**: `http://localhost:8080/api/books/book-detail?isbn=978014168236`
 
 - **Search for Books** 🔎
   - **Method**: `GET`
-  - **Endpoint**: `{{comicBook_url}}/search`
+  - **Endpoint**: `http://localhost:8080/api/books/search`
   - **Description**: Search for a comic book by title, author, or ISBN.
   - **Example Requests**:  
-    - By ISBN: `{{comicBook_url}}/search?isbn=978014168236`
-    - By Book Name: `{{comicBook_url}}/search?bookName=The Great Gatsby`
-    - By Author Name: `{{comicBook_url}}/search?authorName=John Doe`
+    - By ISBN: `http://localhost:8080/api/books/search?isbn=978014168236`
+    - By Book Name: `http://localhost:8080/api/books/search?bookName=The Great Gatsby`
+    - By Author Name: `http://localhost:8080/api/books/search?authorName=John Doe`
 
 ---
 
@@ -142,7 +159,7 @@ Here are the API endpoints to interact with the comic book inventory. Use the ba
    For the server:
       cd server
       npm install
-      npm start
+      npm run dev
 
    For the client:
       cd client
