@@ -1,5 +1,4 @@
-const Book = require('../db/book.model');
-
+import Book from '../models/book.model.js';
 // Get all the books from inventory with filtering, sorting, and search functionality
 const getBooks = async (req, res) => {
   try {
@@ -59,4 +58,4 @@ const getBooks = async (req, res) => {
   }
 };
 
-module.exports = getBooks;
+export default getBooks;

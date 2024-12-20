@@ -1,5 +1,4 @@
-const Book = require('../db/book.model');
-
+import Book from '../models/book.model.js';
 // Add a new book to inventory
 const addBook = async ( req, res ) => {
     try {
@@ -22,4 +21,4 @@ const addBook = async ( req, res ) => {
     }
 }
 
-module.exports = addBook;
+export default addBook;

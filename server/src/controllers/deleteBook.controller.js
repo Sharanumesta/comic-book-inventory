@@ -1,4 +1,4 @@
-const Book = require('../db/book.model');
+import Book from '../models/book.model.js';
 
 // Updating the book details
 const deleteBook = async (req, res) => {
@@ -17,4 +17,4 @@ const deleteBook = async (req, res) => {
     }
 }
 
-module.exports = deleteBook;
+export default deleteBook;

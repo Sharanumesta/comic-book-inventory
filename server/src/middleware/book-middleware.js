@@ -17,4 +17,4 @@ const book = (Schema) => async(req, res, next) => {
     }
 };
 
-module.exports = book;
+export default book;

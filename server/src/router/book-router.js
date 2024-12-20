@@ -1,13 +1,14 @@
-const express = require('express');
+import express from 'express';
+import getBooks from '../controllers/getBooks.controller.js';
+import searchBooks from '../controllers/searchBooks.controller.js';
+import addBooks from '../controllers/addBook.controller.js';
+import updateBook from '../controllers/updateBook.controller.js';
+import bookDetails from '../controllers/detailBook.controller.js';
+import deleteBook from '../controllers/deleteBook.controller.js';
+import validate from '../middleware/book-middleware.js';
+import bookSchema from '../validator/books-validator.js';
+
 const router = express.Router();
-const getBooks = require('../controllers/getBooks.controller');
-const searchBooks = require('../controllers/searchBooks.controller');
-const addBooks = require('../controllers/addBook.controller');
-const updateBook = require('../controllers/updateBook.controller');
-const bookDetails = require('../controllers/detailBook.controller');
-const deleteBook = require('../controllers/deleteBook.controller');
-const validate = require('../middleware/book-middleware');
-const bookSchema = require('../validator/books-validator');
 
 router.route('/').get(getBooks);
 router.route('/search').get(searchBooks);
@@ -16,4 +17,4 @@ router.route('/update-book').patch(validate(bookSchema), updateBook);
 router.route('/delete-book').delete(deleteBook);
 router.route('/book-detail').get(bookDetails);
 
-module.exports = router;
+export default router;

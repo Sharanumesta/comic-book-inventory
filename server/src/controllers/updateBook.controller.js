@@ -1,4 +1,4 @@
-const Book = require('../db/book.model');
+import Book from '../models/book.model.js';
 
 // Updating the book details
 const updateBook = async (req, res) => {
@@ -23,4 +23,4 @@ const updateBook = async (req, res) => {
     }
 }
 
-module.exports = updateBook;
+export default updateBook;

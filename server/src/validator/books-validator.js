@@ -1,4 +1,4 @@
-const { z } = require("zod");
+import { z } from 'zod';
 
 const bookSchema = z.object({
   
@@ -35,4 +35,4 @@ const bookSchema = z.object({
   description: z.string().optional(),
 });
 
-module.exports = bookSchema;
+export default bookSchema;
