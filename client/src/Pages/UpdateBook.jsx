@@ -4,6 +4,8 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 
 function UpdateBook() {
+    const baseUrl = import.meta.env.VITE_BASE_URL;
+    
     const { isbn } = useParams();
     const navigate = useNavigate();
 
@@ -27,7 +29,7 @@ function UpdateBook() {
     useEffect(() => {
       const fetchBook = async () => {
         try {
-          const response = await axios.get(`http://localhost:8080/api/books/book-detail?isbn=${isbn}`);
+          const response = await axios.get(`${baseUrl}/book-detail?isbn=${isbn}`);
           setBook(response.data);
         } catch (error) {
           console.error("Error fetching book data:", error);

@@ -3,6 +3,8 @@ import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 
 function BookDetail() {
+  const baseUrl = import.meta.env.VITE_BASE_URL;
+  
   const { isbn } = useParams();
   const [book, setBook] = useState("");
   const [error, setError] = useState("");
@@ -11,7 +13,7 @@ function BookDetail() {
     const fetchBook = async () => {
       try {
         const bookDetails = await axios.get(
-          `http://localhost:8080/api/books/book-detail?isbn=${isbn}`
+          `${baseUrl}/book-detail?isbn=${isbn}`
         );
         setBook(bookDetails.data);
       } catch (error) {

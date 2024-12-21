@@ -4,6 +4,8 @@ import Swal from 'sweetalert2';
 import { useNavigate } from "react-router-dom";
 
 function NewBook() {
+    const baseUrl = import.meta.env.VITE_BASE_URL;
+    console.log(baseUrl)
     const navigate = useNavigate();
     const [newBook, setNewBook] = useState({
         isbn: "",
@@ -46,7 +48,7 @@ function NewBook() {
     
 
         try {
-            const res = await axios.post("http://localhost:8080/api/books/new-book", formattedBook);
+            const res = await axios.post(`${baseUrl}/new-book`, formattedBook);
             console.log(res);
 
             Swal.fire({
