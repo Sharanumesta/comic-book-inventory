@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 
 function DeleteBook() {
-  const baseUrl = import.meta.env.VITE_BASE_URL;
+  const baseUrl = `${import.meta.env.VITE_BASE_URL}/${import.meta.env.VITE_BOOK_ROUTE}`;
 
   const { isbn } = useParams();
   const navigate = useNavigate();
@@ -31,7 +31,7 @@ function DeleteBook() {
                 icon: "success",
                 confirmButtonText: "Okay",
               }).then(() => {
-                navigate("/");
+                navigate("/dashboard");
                 window.location.reload();
               });
             });

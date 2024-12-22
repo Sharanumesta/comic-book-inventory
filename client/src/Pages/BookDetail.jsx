@@ -3,11 +3,10 @@ import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 
 function BookDetail() {
-  const baseUrl = import.meta.env.VITE_BASE_URL;
+  const baseUrl = `${import.meta.env.VITE_BASE_URL}/${import.meta.env.VITE_BOOK_ROUTE}`;
   
   const { isbn } = useParams();
   const [book, setBook] = useState("");
-  const [error, setError] = useState("");
 
   useEffect(() => {
     const fetchBook = async () => {
@@ -17,7 +16,6 @@ function BookDetail() {
         );
         setBook(bookDetails.data);
       } catch (error) {
-        console.error("Error fetching data:", error);
         setError("Failed to load books. Please try again later.");
       }
     };

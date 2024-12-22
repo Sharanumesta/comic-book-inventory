@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
-import BookList from "./BookList";
-import FilterSort from "./FilterSort";
-import SearchBooks from "./SearchBooks";
+import BookList from "../Components/BookList";
+import FilterSort from "../Components/FilterSort";
+import SearchBooks from "../Components/SearchBooks";
 
 function Home() {
+  const baseUrl = `${import.meta.env.VITE_BASE_URL}/${import.meta.env.VITE_BOOK_ROUTE}`;
+
   const navigate = useNavigate();
   const [books, setBooks] = useState([]);
   const [authors, setAuthors] = useState([]);
@@ -35,7 +37,7 @@ function Home() {
   useEffect(() => {
     const fetchBooks = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/api/books/", {
+        const response = await axios.get(`${baseUrl}/`, {
           params: { sort, filterType, filterValue },
         });
         setBooks(response.data);
@@ -62,7 +64,7 @@ function Home() {
 
     const fetchAuthors = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/api/books/");
+        const response = await axios.get(`${baseUrl}`);
         const uniqueAuthors = [
           ...new Set(response.data.map((book) => book.authorName)),
         ].sort();
@@ -79,7 +81,7 @@ function Home() {
 
   const handleSearch = async (data) => {
     try {
-      const response = await axios.get("http://localhost:8080/api/books/search", { params: data });
+      const response = await axios.get(`${baseUrl}/search`, { params: data });
       if (response.data.length === 0) {
         setError("Book not found !!");
         setBooks([]);

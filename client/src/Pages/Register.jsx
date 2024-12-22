@@ -1,53 +1,33 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-function Login() {
+function Register() {
   const baseUrl = `${import.meta.env.VITE_BASE_URL}/${
     import.meta.env.VITE_AUTH_ROUTE
   }`;
 
-  const [admin, setAdmin] = useState({ email: "", password: "" });
+  const [admin, setAdmin] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
   const navigate = useNavigate();
   const [error, setError] = useState("");
-
-  useEffect(() => {
-    const fetchAdmin = async () => {
-      const token = localStorage.getItem("token");
-      if (token) {
-        try {
-          const res = await axios.post(
-            `${baseUrl}/login`,
-            {},
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
-          if (res.data.username) {
-            navigate("/dashboard");
-          }
-        } catch (error) {
-          setError(error.response?.data?.message);
-        }
-      }
-    };
-    fetchAdmin();
-  }, [navigate]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const res = await axios.post(`${baseUrl}/login`, admin);
+      const res = await axios.post(`${baseUrl}/register`, admin);
       const token = res.data.token;
-      localStorage.setItem("token", token);
-      navigate("/dashboard");
+      if (token) {
+        localStorage.setItem("token", token);
+        navigate("/");
+      }
     } catch (error) {
       setError(error.response?.data?.message);
     }
   };
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setAdmin({ ...admin, [name]: value });
@@ -63,10 +43,28 @@ function Login() {
             </div>
           )}
           <form onSubmit={handleSubmit} className="">
-            <h2 className="text-center text-secondary">Login</h2>
+            <h2 className="text-center text-secondary">Register</h2>
             <div className="form-group p-3">
               <label
-                htmlFor="email1"
+                htmlFor="username"
+                className="mb-1 fw-semibold text-secondary"
+              >
+                Username
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                id="username"
+                placeholder="Enter username"
+                name="username"
+                value={admin.username}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="form-group p-3">
+              <label
+                htmlFor="email"
                 className="mb-1 fw-semibold text-secondary"
               >
                 Email address
@@ -74,8 +72,7 @@ function Login() {
               <input
                 type="email"
                 className="form-control"
-                id="email1"
-                aria-describedby="emailHelp"
+                id="email"
                 placeholder="Enter email"
                 name="email"
                 value={admin.email}
@@ -102,8 +99,11 @@ function Login() {
               />
             </div>
             <div className=" d-flex justify-content-center">
-              <button type="submit" className="btn btn-outline-secondary fw-bold mt-3">
-                Login
+              <button
+                type="submit"
+                className="btn btn-outline-secondary fw-bold mt-3"
+              >
+                Register
               </button>
             </div>
           </form>
@@ -112,5 +112,4 @@ function Login() {
     </>
   );
 }
-
-export default Login;
+export default Register;
