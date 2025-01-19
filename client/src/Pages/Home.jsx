@@ -10,6 +10,13 @@ function Home() {
   const baseUrl = `${import.meta.env.VITE_BASE_URL}/${import.meta.env.VITE_BOOK_ROUTE}`;
 
   const navigate = useNavigate();
+  useEffect(() => {
+    const user = localStorage.getItem("token");
+    if (!user) {
+      navigate("/login");
+    }
+  }, [navigate]);
+
   const [books, setBooks] = useState([]);
   const [authors, setAuthors] = useState([]);
 

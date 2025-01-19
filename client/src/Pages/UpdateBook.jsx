@@ -8,6 +8,12 @@ function UpdateBook() {
 
   const { isbn } = useParams();
   const navigate = useNavigate();
+    useEffect(() => {
+    const user = localStorage.getItem("token");
+    if (!user) {
+      navigate("/login");
+    }
+  }, [navigate]);
 
   const [book, setBook] = useState({
     isbn: "",

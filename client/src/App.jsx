@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import BookDetail from "./Pages/BookDetail";
 import Footer from "./Components/Footer";
@@ -8,24 +9,43 @@ import UpdateBook from "./Pages/UpdateBook";
 import DeleteBook from "./Pages/DeleteBook";
 import Login from "./Pages/Login";
 import Register from "./Pages/Register";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import NotFound from "./Pages/NotFound";
 
 function App() {
+  const [username, setUsername] = useState(null);
+
+  useEffect(() => {
+    const storedUsername = localStorage.getItem("username");
+    if (storedUsername) {
+      setUsername(storedUsername);
+    }
+  }, []);
+
   return (
     <Router>
-      <Navbar />
+      <ConditionalNavbar username={username} />
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/dashboard" element={<Home />} />
         <Route path="/new-book" element={<NewBook />} />
         <Route path="/book-detail/:isbn" element={<BookDetail />} />
         <Route path="/update-book/:isbn" element={<UpdateBook />} />
         <Route path="/delete-book/:isbn" element={<DeleteBook />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
     </Router>
   );
+}
+
+// Conditionally render Navbar based on the current route
+function ConditionalNavbar({ username }) {
+  const location = useLocation();
+  const hideNavbarPaths = ["/login", "/register"]; 
+
+  return !hideNavbarPaths.includes(location.pathname) ? <Navbar username={username} /> : null;
 }
 
 export default App;

@@ -1,10 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function BookDetail() {
-  const baseUrl = `${import.meta.env.VITE_BASE_URL}/${import.meta.env.VITE_BOOK_ROUTE}`;
-  
+  const baseUrl = `${import.meta.env.VITE_BASE_URL}/${
+    import.meta.env.VITE_BOOK_ROUTE
+  }`;
+
+  const navigate = useNavigate();
+  useEffect(() => {
+    const user = localStorage.getItem("token");
+    if (!user) {
+      navigate("/login");
+    }
+  }, [navigate]);
+
   const { isbn } = useParams();
   const [book, setBook] = useState("");
 

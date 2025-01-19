@@ -4,10 +4,18 @@ import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 
 function DeleteBook() {
-  const baseUrl = `${import.meta.env.VITE_BASE_URL}/${import.meta.env.VITE_BOOK_ROUTE}`;
+  const baseUrl = `${import.meta.env.VITE_BASE_URL}/${
+    import.meta.env.VITE_BOOK_ROUTE
+  }`;
 
   const { isbn } = useParams();
   const navigate = useNavigate();
+  useEffect(() => {
+    const user = localStorage.getItem("token");
+    if (!user) {
+      navigate("/login");
+    }
+  }, [navigate]);
 
   useEffect(() => {
     const deleteBook = async () => {
@@ -22,19 +30,17 @@ function DeleteBook() {
       });
       if (confirmDelete.isConfirmed) {
         try {
-          await axios
-            .delete(`${baseUrl}/delete-book?isbn=${isbn}`)
-            .then(() => {
-              Swal.fire({
-                title: "Deleted",
-                text: "Book successfully deleted",
-                icon: "success",
-                confirmButtonText: "Okay",
-              }).then(() => {
-                navigate("/dashboard");
-                window.location.reload();
-              });
+          await axios.delete(`${baseUrl}/delete-book?isbn=${isbn}`).then(() => {
+            Swal.fire({
+              title: "Deleted",
+              text: "Book successfully deleted",
+              icon: "success",
+              confirmButtonText: "Okay",
+            }).then(() => {
+              navigate("/dashboard");
+              window.location.reload();
             });
+          });
         } catch (error) {
           console.error("Error while deleting book:", error);
           Swal.fire({
@@ -50,7 +56,7 @@ function DeleteBook() {
     deleteBook();
   }, [isbn, navigate]);
 
-  return null; //no UI needed
+  return null;
 }
 
 export default DeleteBook;

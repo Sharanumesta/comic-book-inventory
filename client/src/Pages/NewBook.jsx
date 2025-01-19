@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
@@ -8,8 +8,14 @@ function NewBook() {
     import.meta.env.VITE_BOOK_ROUTE
   }`;
 
-  console.log(baseUrl);
   const navigate = useNavigate();
+  useEffect(() => {
+    const user = localStorage.getItem("token");
+    if (!user) {
+      navigate("/login");
+    }
+  }, [navigate]);
+
   const [newBook, setNewBook] = useState({
     isbn: "",
     bookName: "",

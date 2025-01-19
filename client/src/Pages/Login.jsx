@@ -7,33 +7,32 @@ function Login() {
     import.meta.env.VITE_AUTH_ROUTE
   }`;
 
-  const [admin, setAdmin] = useState({ email: "", password: "" });
   const navigate = useNavigate();
+  const [admin, setAdmin] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
 
   useEffect(() => {
-    const fetchAdmin = async () => {
-      const token = localStorage.getItem("token");
-      if (token) {
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      const fetchAdmin = async () => {
         try {
           const res = await axios.post(
             `${baseUrl}/login`,
             {},
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
+            { headers: { Authorization: `Bearer ${token}` } }
           );
           if (res.data.username) {
-            navigate("/dashboard");
+            localStorage.setItem("username", res.data.username);
+            navigate("/");
           }
         } catch (error) {
-          setError(error.response?.data?.message);
+          localStorage.removeItem("token");
         }
-      }
-    };
-    fetchAdmin();
+      };
+
+      fetchAdmin();
+    }
   }, [navigate]);
 
   const handleSubmit = async (event) => {
@@ -41,8 +40,11 @@ function Login() {
     try {
       const res = await axios.post(`${baseUrl}/login`, admin);
       const token = res.data.token;
+      const username = res.data.username;
+
       localStorage.setItem("token", token);
-      navigate("/dashboard");
+      localStorage.setItem("username", username);
+      navigate("/");
     } catch (error) {
       setError(error.response?.data?.message);
     }
@@ -62,12 +64,15 @@ function Login() {
               {error}
             </div>
           )}
-          <form onSubmit={handleSubmit} className="">
-            <h2 className="text-center text-secondary">Login</h2>
+          <form onSubmit={handleSubmit}>
+            <h2 className="text-center" style={{ color: "#4C585B" }}>
+              Login
+            </h2>
             <div className="form-group p-3">
               <label
                 htmlFor="email1"
-                className="mb-1 fw-semibold text-secondary"
+                className="mb-1 fw-semibold"
+                style={{ color: "#4C585B" }}
               >
                 Email address
               </label>
@@ -75,18 +80,19 @@ function Login() {
                 type="email"
                 className="form-control"
                 id="email1"
-                aria-describedby="emailHelp"
                 placeholder="Enter email"
                 name="email"
                 value={admin.email}
                 onChange={handleChange}
                 required
+                style={{ color: "#4C585B" }}
               />
             </div>
             <div className="form-group p-3">
               <label
                 htmlFor="password"
-                className="mb-1 fw-semibold text-secondary"
+                className="mb-1 fw-semibold"
+                style={{ color: "#4C585B" }}
               >
                 Password
               </label>
@@ -99,10 +105,14 @@ function Login() {
                 value={admin.password}
                 onChange={handleChange}
                 required
+                style={{ color: "#4C585B" }}
               />
             </div>
             <div className=" d-flex justify-content-center">
-              <button type="submit" className="btn btn-outline-secondary fw-bold mt-3">
+              <button
+                type="submit"
+                className="btn btn-outline-secondary fw-bold mt-3"
+              >
                 Login
               </button>
             </div>
