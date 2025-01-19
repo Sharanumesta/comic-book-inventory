@@ -4,11 +4,13 @@ import jwt from "jsonwebtoken";
 // Register admin
 const register = async (req, res) => {
   try {
-    const { username, email, password } = req.body;
+    let { username, email, password } = req.body;
 
     if (!username || !email || !password) {
       return res.status(400).json({ message: "Enter all credentials" });
     }
+
+    email = email.toLowerCase();
 
     const existingAdmin = await Admin.findOne({ email });
     if (existingAdmin) {
@@ -56,18 +58,18 @@ const login = async (req, res) => {
       return res.status(400).json({ message: "Enter all credentials" });
     }
 
-    const user = await Admin.findOne({ email });
-    if (!user) {
+    const admin = await Admin.findOne({ email: email.toLowerCase() });
+    if (!admin) {
       return res.status(404).json({ message: "User not found" });
     }
 
-    const isPasswordCorrect = await user.isPasswordCorrect(password);
+    const isPasswordCorrect = await admin.isPasswordCorrect(password);
     if (!isPasswordCorrect) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    const token = await user.generateToken();
-    return res.status(200).json({ token });
+    const token = await admin.generateToken();
+    return res.status(200).json({ token, username: admin.username });
   } catch (error) {
     console.error("Error during login:", error);
     return res.status(500).json({ message: "Internal Server Error" });

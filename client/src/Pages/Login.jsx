@@ -28,6 +28,7 @@ function Login() {
           }
         } catch (error) {
           localStorage.removeItem("token");
+          localStorage.removeItem("username");
         }
       };
 
@@ -41,7 +42,8 @@ function Login() {
       const res = await axios.post(`${baseUrl}/login`, admin);
       const token = res.data.token;
       const username = res.data.username;
-
+      console.log(res.data)
+      console.log(username);
       localStorage.setItem("token", token);
       localStorage.setItem("username", username);
       navigate("/");
