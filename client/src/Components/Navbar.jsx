@@ -22,8 +22,8 @@ function Navbar({ username }) {
             </button>
           </Link>
           {username ? (
-            <span className="text-white ms-3 fs-5 fw-semibold">
-              Welcome, {username}
+            <span className="text-info ms-5 fs-5 fw-normal text-capitalize">
+              {username}
             </span>
           ) : (
             <Link
