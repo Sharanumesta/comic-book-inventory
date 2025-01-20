@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 function Register() {
@@ -7,12 +7,22 @@ function Register() {
     import.meta.env.VITE_AUTH_ROUTE
   }`;
 
+  const navigate = useNavigate();
+  useEffect(() => {
+    const user = localStorage.getItem("token");
+    if (user) {
+      // navigate("/login");
+      navigate("/");
+    }else{
+    }
+  }, [navigate]);
+
   const [admin, setAdmin] = useState({
     username: "",
     email: "",
     password: "",
   });
-  const navigate = useNavigate();
+
   const [error, setError] = useState("");
 
   const handleSubmit = async (event) => {

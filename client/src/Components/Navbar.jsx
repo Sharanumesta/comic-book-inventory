@@ -1,8 +1,17 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
 
-function Navbar({ username }) {
+function Navbar() {
+  const [username, setUsername] = useState(null);
+
+  useEffect(() => {
+    const storedUsername = localStorage.getItem("username");
+    if (storedUsername) {
+      setUsername(storedUsername);
+    }
+  }, []);
+
   return (
     <nav className="navbar navbar-light bg-dark">
       <div className="container-fluid container d-flex align-items-center">

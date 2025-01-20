@@ -14,18 +14,10 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from "react-route
 import NotFound from "./Pages/NotFound";
 
 function App() {
-  const [username, setUsername] = useState(null);
-
-  useEffect(() => {
-    const storedUsername = localStorage.getItem("username");
-    if (storedUsername) {
-      setUsername(storedUsername);
-    }
-  }, []);
 
   return (
     <Router>
-      <ConditionalNavbar username={username} />
+      <ConditionalNavbar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
