@@ -71,7 +71,7 @@ function UpdateBook() {
         title: "Success",
         text: "Book updated successfully",
       }).then((result) => {
-        if (result.isConfirmed) navigate("/dashboard");
+        if (result.isConfirmed) navigate("/");
       });
     } catch (error) {
       console.error("Error updating book:", error);

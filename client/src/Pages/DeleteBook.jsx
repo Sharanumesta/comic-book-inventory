@@ -37,7 +37,7 @@ function DeleteBook() {
               icon: "success",
               confirmButtonText: "Okay",
             }).then(() => {
-              navigate("/dashboard");
+              navigate("/");
               window.location.reload();
             });
           });

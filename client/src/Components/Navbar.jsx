@@ -21,18 +21,11 @@ function Navbar({ username }) {
               Add a New Book
             </button>
           </Link>
-          {username ? (
+          <Link to="/logout" style={{ textDecoration: "none" }}>
             <span className="text-info ms-5 fs-5 fw-normal text-capitalize">
               {username}
             </span>
-          ) : (
-            <Link
-              to="/login"
-              className="text-decoration-none text-white fw-semibold btn fs-5 ms-3"
-            >
-              Login
-            </Link>
-          )}
+          </Link>
         </div>
       </div>
     </nav>

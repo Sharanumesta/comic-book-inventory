@@ -68,7 +68,7 @@ function NewBook() {
         title: "Success",
         text: "Book added successfully",
       }).then(() => {
-        navigate("/dashboard");
+        navigate("/");
       });
     } catch (error) {
       console.error("Error adding the Book", error);

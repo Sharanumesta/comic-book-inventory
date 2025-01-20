@@ -8,6 +8,7 @@ import NewBook from "./Pages/NewBook";
 import UpdateBook from "./Pages/UpdateBook";
 import DeleteBook from "./Pages/DeleteBook";
 import Login from "./Pages/Login";
+import Logout from "./Pages/Logout";
 import Register from "./Pages/Register";
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import NotFound from "./Pages/NotFound";
@@ -29,6 +30,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/logout" element={<Logout />} />
         <Route path="/new-book" element={<NewBook />} />
         <Route path="/book-detail/:isbn" element={<BookDetail />} />
         <Route path="/update-book/:isbn" element={<UpdateBook />} />
